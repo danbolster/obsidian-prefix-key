@@ -16,10 +16,6 @@ export default class MyPlugin extends Plugin {
 
 		await this.loadSettings();
 
-		this.addRibbonIcon('dice', 'Sample Plugin', () => {
-			new Notice('This is a notice!');
-		});
-
 		this.addStatusBarItem().setText('Status Bar Text');
 
 		this.addCommand({
@@ -40,17 +36,23 @@ export default class MyPlugin extends Plugin {
 			}
 		});
 
-		this.addSettingTab(new SampleSettingTab(this.app, this));
+		/**
+		document.addEventListener('keydown', function(event) {
+		  if (event.ctrlKey && event.key === 'b')
+			{
+		    alert('Prefix!');
+		  }
+		});
+		*
+		**/
+		this.registerDomEvent(document, 'keydown', (evt: KeyboardEvent) => {
 
-		this.registerCodeMirror((cm: CodeMirror.Editor) => {
-			console.log('codemirror', cm);
+			if(evt.ctrlKey && evt.key === 'b')
+			{
+				alert('Prefix!')
+			}
 		});
 
-		this.registerDomEvent(document, 'click', (evt: MouseEvent) => {
-			console.log('click', evt);
-		});
-
-		this.registerInterval(window.setInterval(() => console.log('setInterval'), 5 * 60 * 1000));
 	}
 
 	onunload() {
