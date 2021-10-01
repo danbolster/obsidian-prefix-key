@@ -8,6 +8,14 @@ import
 	Setting
 } from 'obsidian';
 
+async function outside()
+{
+	setTimeout(() => {
+			console.log(Date.now())
+
+	}, 5000);
+	return false
+}
 
 export default class MyPlugin extends Plugin
 {
@@ -21,24 +29,25 @@ export default class MyPlugin extends Plugin
 			{
 				prefix = true
 
+				setTimeout(function()
+				{
+    			prefix = false;
+				},5000);
 			}
 			else if(evt.key == '%' && prefix == true)
 			{
 				var application : any = this.app
 				application.commands.executeCommandById("workspace:split-vertical")
 				prefix = false
+				evt.preventDefault()
 			}
 			else if(evt.key == '"' && prefix == true)
 			{
+
 				var application : any = this.app
 				application.commands.executeCommandById("workspace:split-horizontal")
 				prefix = false
-			}
-			else if(evt.key == 'w' && prefix == true)
-			{
-				var application : any = this.app
-				application.commands.executeCommandById("workspace:close")
-				prefix = false
+				evt.preventDefault()
 			}
 			else if(evt.key == 'ArrowUp' && prefix == true)
 			{
@@ -50,6 +59,18 @@ export default class MyPlugin extends Plugin
 				var application : any = this.app
 				application.commands.executeCommandById("editor:focus-bottom")
 			}
+			else if(evt.key == 'ArrowLeft' && prefix == true)
+			{
+				var application : any = this.app
+				application.commands.executeCommandById("editor:focus-left")
+			}
+			else if(evt.key == 'ArrowRight' && prefix == true)
+			{
+				var application : any = this.app
+				application.commands.executeCommandById("editor:focus-right")
+			}
+
+
 		});
 	}
 
